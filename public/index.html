@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,6 +31,7 @@
         <li><a href="#parkering">Parkering</a></li>
         <li><a href="#i-huset">I huset</a></li>
         <li><a href="#utstyr">Slokkeutstyr</a></li>
+        <li><a href="#brannslangeskap">Brannslangeskap</a></li>
         <li><a href="#roykvarslere">Røykvarslere</a></li>
         <li><a href="#ildsteder">Ildsteder</a></li>
         <li><a href="#sjekkliste">Sjekkliste</a></li>
@@ -367,8 +369,37 @@
       </div>
 
       <p class="merknad">I Gamle Skudeneshavn finnes det også <strong>brannslangeskap</strong>
-        plassert rundt i bydelen (se kart på side 9 i den originale permen). Gjør deg kjent
-        med hvor det nærmeste står.</p>
+        plassert rundt i bydelen. Se <a href="#brannslangeskap">kartet nedenfor</a> og gjør deg
+        kjent med hvor det nærmeste står.</p>
+    </div>
+  </section>
+
+  <!-- BRANNSLANGESKAP – KART -->
+  <section class="seksjon seksjon-sand" id="brannslangeskap" aria-labelledby="kart-tittel">
+    <div class="indre">
+      <p class="overlinje">Felles slokkeutstyr i bydelen</p>
+      <h2 id="kart-tittel">Brannslangeskap i Gamle Skudeneshavn</h2>
+      <p>Rundt om i den gamle bydelen står det <strong>brannslangeskap</strong> til felles bruk.
+        Fordi husene står tett og gatene er smale, er det avgjørende at du vet hvor det nærmeste
+        skapet står <em>før</em> det brenner. Kartet under viser de registrerte plasseringene.</p>
+
+      <div class="kart-omslag">
+        <div id="brannkart" class="kart" role="application"
+             aria-label="Interaktivt kart over brannslangeskap i Gamle Skudeneshavn">
+        </div>
+      </div>
+
+      <p class="merknad" id="kartFallback">
+        Plasseringene er digitalisert fra kartet i den originale informasjonspermen
+        («Brannsikring Gamle Skudeneshavn», Karmøy kommune) og er <strong>omtrentlige</strong>.
+        Sjekk nøyaktig plassering lokalt, og meld fra til
+        <a href="https://www.karmoy.kommune.no" rel="external">kommunen / brannvesenet</a>
+        om noe er feil eller mangler. Under følger en liste med alle skapene:
+      </p>
+
+      <ol class="skap-liste" id="skapListe" aria-label="Liste over registrerte brannslangeskap">
+        <!-- Fylles ut fra app.js, og fungerer som tekstalternativ til kartet -->
+      </ol>
     </div>
   </section>
 
@@ -558,6 +589,7 @@
   </div>
 </footer>
 
+<script src="vendor/leaflet/leaflet.js" defer></script>
 <script src="app.js" defer></script>
 </body>
 </html>

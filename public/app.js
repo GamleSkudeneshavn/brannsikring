@@ -4,6 +4,23 @@
 (function () {
   "use strict";
 
+  /* ---------- Brannslangeskap (kartdata) ----------
+     OMTRENTLIGE plasseringer, digitalisert fra kartet i den originale
+     informasjonspermen (Karmøy kommune). Rett opp koordinatene her når
+     eksakte posisjoner er bekreftet lokalt – nettleserkonsollen logger
+     koordinatene der du klikker i kartet, så det er lett å finne riktige verdier.
+     Hvert skap: { navn: "...", lat: <breddegrad>, lng: <lengdegrad> } */
+  var BRANNSLANGESKAP = [
+    { navn: "Søragata (nord, ved Parken)",        lat: 59.14565, lng: 5.27305 },
+    { navn: "Søragata (ved Tåkelurfabrikken)",    lat: 59.14490, lng: 5.27300 },
+    { navn: "Brattabakken / Søragata",            lat: 59.14430, lng: 5.27255 },
+    { navn: "Piren",                              lat: 59.14390, lng: 5.27320 },
+    { navn: "Bøgevikbakken (vest)",               lat: 59.14385, lng: 5.27185 },
+    { navn: "Veibelsbakken",                      lat: 59.14345, lng: 5.27155 },
+    { navn: "Nornes",                             lat: 59.14305, lng: 5.27215 },
+    { navn: "Kornelius Holmen (sør)",             lat: 59.14260, lng: 5.27230 }
+  ];
+
   /* ---------- Mobilmeny ---------- */
   var menyKnapp = document.getElementById("menyKnapp");
   var meny = document.getElementById("hovedmeny");
@@ -155,5 +172,60 @@
   var skrivUt = document.getElementById("skrivUt");
   if (skrivUt) {
     skrivUt.addEventListener("click", function () { window.print(); });
+  }
+
+  /* ---------- Brannslangeskap: tekstliste + kart ---------- */
+  // Tekstlisten bygges alltid – den er tilgjengelig alternativ til kartet
+  // og fungerer også uten JavaScript-kartet (skjermlesere, utskrift).
+  var skapListe = document.getElementById("skapListe");
+  if (skapListe) {
+    BRANNSLANGESKAP.forEach(function (skap) {
+      var li = document.createElement("li");
+      li.textContent = skap.navn;
+      var koord = document.createElement("span");
+      koord.className = "skap-koord";
+      koord.textContent = " (" + skap.lat.toFixed(5) + ", " + skap.lng.toFixed(5) + ")";
+      li.appendChild(koord);
+      skapListe.appendChild(li);
+    });
+  }
+
+  // Kartet krever Leaflet (vendor/leaflet). Faller stille tilbake til
+  // tekstlisten hvis biblioteket ikke er lastet.
+  var kartEl = document.getElementById("brannkart");
+  if (kartEl && typeof L !== "undefined" && BRANNSLANGESKAP.length) {
+    var ikon = L.icon({
+      iconUrl: "vendor/leaflet/images/marker-icon.png",
+      iconRetinaUrl: "vendor/leaflet/images/marker-icon-2x.png",
+      shadowUrl: "vendor/leaflet/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    var kart = L.map(kartEl, { scrollWheelZoom: false });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>-bidragsytere"
+    }).addTo(kart);
+
+    var punkter = [];
+    BRANNSLANGESKAP.forEach(function (skap) {
+      var m = L.marker([skap.lat, skap.lng], { icon: ikon, title: skap.navn }).addTo(kart);
+      m.bindPopup("<strong>Brannslangeskap</strong><br>" + skap.navn);
+      punkter.push([skap.lat, skap.lng]);
+    });
+
+    kart.fitBounds(punkter, { padding: [30, 30], maxZoom: 17 });
+
+    // Klikk i kartet logger koordinatene til konsollen – nyttig når
+    // plasseringene skal rettes opp mot virkeligheten.
+    kart.on("click", function (e) {
+      if (window.console) {
+        console.log("Kartklikk: " + e.latlng.lat.toFixed(5) + ", " + e.latlng.lng.toFixed(5));
+      }
+    });
   }
 })();

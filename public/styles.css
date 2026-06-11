@@ -414,10 +414,35 @@ details[open] summary { margin-bottom: 0.5rem; }
 
 /* --- Utskrift ---------------------------------------------------------------------------- */
 
+/* Brannslangeskap-kart */
+.kart-omslag {
+  margin: 1.5rem 0 1rem;
+  border: 1px solid var(--strek); border-radius: var(--radius);
+  overflow: hidden;
+}
+.kart {
+  height: 460px; width: 100%;
+  background: var(--sand);
+}
+@media (max-width: 600px) {
+  .kart { height: 340px; }
+}
+.skap-liste {
+  margin: 0.5rem 0 0; padding-left: 1.4rem;
+  columns: 2; column-gap: 2rem;
+}
+@media (max-width: 600px) { .skap-liste { columns: 1; } }
+.skap-liste li { margin: 0.25rem 0; break-inside: avoid; }
+.skap-koord { color: #5A5347; font-size: 0.85rem; white-space: nowrap; }
+.leaflet-container { font-family: var(--body); }
+
 @media print {
   .topp, .hero-handling, .meny-knapp, .knapp, #nullstillSjekk, .logg-form, .logg-slett { display: none !important; }
   .seksjon { padding: 1rem 0; break-inside: avoid; }
   body { background: #fff; font-size: 11pt; }
   a::after { content: " (" attr(href) ")"; font-size: 0.85em; }
   .logg-tabell { min-width: 0; }
+  /* Det interaktive kartet kan ikke skrives ut – tekstlisten erstatter det */
+  .kart-omslag { display: none !important; }
+  .skap-liste { columns: 1; }
 }

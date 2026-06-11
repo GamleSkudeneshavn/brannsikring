@@ -17,11 +17,23 @@ bundler, no dependencies, no build:
 
 ```
 public/
-  index.html    – the whole page (Norwegian bokmål, semantic HTML)
-  styles.css    – mobile-first, WCAG-focused stylesheet
-  app.js        – menu, checklist and inspection log (persisted in localStorage)
-  _headers      – security headers for Cloudflare Pages
+  index.html      – the whole page (Norwegian bokmål, semantic HTML)
+  styles.css      – mobile-first, WCAG-focused stylesheet
+  app.js          – menu, checklist, inspection log, and the fire-hose map
+  _headers        – security headers for Cloudflare Pages
+  vendor/leaflet/ – Leaflet 1.9.4, vendored locally (no CDN, no build step)
 ```
+
+## Fire-hose cabinet map (brannslangeskap)
+
+The «Brannslangeskap» section renders an OpenStreetMap map via Leaflet,
+digitised from the map on page 9 of the original booklet. Cabinet positions
+live in the `BRANNSLANGESKAP` array at the top of [public/app.js](public/app.js)
+as `{ navn, lat, lng }` — **the positions are approximate** and should be
+corrected against real GPS coordinates. Clicking the map logs the clicked
+coordinates to the browser console to make that easy. The section also renders
+a plain text list of all cabinets, which is the accessible/no-JS/print
+fallback — keep both in sync (both are driven by the same array).
 
 ## Conventions
 
