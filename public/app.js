@@ -5,20 +5,21 @@
   "use strict";
 
   /* ---------- Brannslangeskap (kartdata) ----------
-     OMTRENTLIGE plasseringer, digitalisert fra kartet i den originale
-     informasjonspermen (Karmøy kommune). Rett opp koordinatene her når
-     eksakte posisjoner er bekreftet lokalt – nettleserkonsollen logger
-     koordinatene der du klikker i kartet, så det er lett å finne riktige verdier.
+     Plasseringer kartfestet ut fra kjente beskrivelser (gate-/husnummer),
+     med koordinater hentet fra OpenStreetMap. Posisjonene er fortsatt
+     omtrentlige – nettleserkonsollen logger koordinatene der du klikker i
+     kartet, så det er lett å finjustere.
      Hvert skap: { navn: "...", lat: <breddegrad>, lng: <lengdegrad> } */
   var BRANNSLANGESKAP = [
-    { navn: "Søragadå (nord, ved Kaigata)",       lat: 59.14890, lng: 5.25930 },
-    { navn: "Søragadå (ved Tåkelurfabrikken)",    lat: 59.14845, lng: 5.26060 },
-    { navn: "Søragadå (sentralt)",                lat: 59.14800, lng: 5.26150 },
-    { navn: "Søragadå (sør, ved piren)",          lat: 59.14755, lng: 5.26285 },
-    { navn: "Worregadå / Bådebakken",             lat: 59.14900, lng: 5.26010 },
-    { navn: "Veibellsbakken",                     lat: 59.14905, lng: 5.25975 },
-    { navn: "Nordnes",                            lat: 59.14848, lng: 5.25905 },
-    { navn: "Korneliusholmen (sør)",              lat: 59.14828, lng: 5.25795 }
+    { navn: "Gangvei Veibelsbakken–Gunnarsbakken", lat: 59.14916, lng: 5.26005 },
+    { navn: "Nordnes 1–3–5 (åpen plass)",          lat: 59.14881, lng: 5.25879 },
+    { navn: "Bådebakken (midt)",                   lat: 59.14871, lng: 5.26007 },
+    { navn: "Nordnes 12 / Søragadå 15 (åpen plass)", lat: 59.14844, lng: 5.25955 },
+    { navn: "Hjørnet Halvorsbakken / Søragadå",    lat: 59.14823, lng: 5.26054 },
+    { navn: "Mælandsgården (tunet)",               lat: 59.14787, lng: 5.26055 },
+    { navn: "Søragadå 29–37 (langs gata)",         lat: 59.14789, lng: 5.26146 },
+    { navn: "Søragadå 53–57",                      lat: 59.14762, lng: 5.26274 },
+    { navn: "Søragadå 68–70",                      lat: 59.14735, lng: 5.26394 }
   ];
 
   /* ---------- Mobilmeny ---------- */
@@ -204,7 +205,8 @@
       shadowSize: [41, 41]
     });
 
-    var kart = L.map(kartEl, { scrollWheelZoom: false });
+    var kart = L.map(kartEl, { scrollWheelZoom: false, zoomSnap: 0 });
+    window.brannkart = kart; // tilgjengelig i konsollen for finjustering
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -219,6 +221,17 @@
     });
 
     kart.fitBounds(punkter, { padding: [30, 30], maxZoom: 17 });
+
+    // Knip-zoom (pinch) på styreflate/skjerm sender wheel-hendelser med
+    // ctrlKey satt. Da zoomer vi kartet i stedet for hele nettsiden, mens
+    // vanlig rulling fortsatt ruller siden forbi kartet.
+    kartEl.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      var punkt = kart.mouseEventToContainerPoint(e);
+      var senter = kart.containerPointToLatLng(punkt);
+      kart.setZoomAround(senter, kart.getZoom() - e.deltaY * 0.1);
+    }, { passive: false });
 
     // Klikk i kartet logger koordinatene til konsollen – nyttig når
     // plasseringene skal rettes opp mot virkeligheten.
