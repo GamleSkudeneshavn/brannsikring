@@ -1,0 +1,423 @@
+/* ==========================================================================
+   Brannsikring i Gamle Skudeneshavn
+   Palett hentet fra bydelen: hvitmalt kledning, teglrøde tak, sjø og tjære.
+   ========================================================================== */
+
+:root {
+  --hvit: #FCFCFA;        /* hvitmalt kledning – sidebakgrunn */
+  --sand: #F1EDE4;        /* lyse brostein – alternerende seksjoner */
+  --tjare: #29231D;       /* tjæret tre – brødtekst */
+  --tegl: #BC3F28;        /* teglrøde tak – aksent, store flater */
+  --tegl-dyp: #93301C;    /* mørkere tegl – lenker og små elementer (AA-kontrast) */
+  --sjo: #2C5A6B;         /* sjøen i havna – sekundærfarge */
+  --sjo-lys: #DCE7EB;
+  --strek: #D9D2C4;
+  --fokus: #1A4ED8;
+
+  --display: "Bodoni Moda", Georgia, serif;
+  --body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --maks-bredde: 68rem;
+  --radius: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--tjare);
+  background: var(--hvit);
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+/* --- Tilgjengelighet --------------------------------------------------- */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: 0.5rem; top: -3.5rem;
+  background: var(--tjare); color: #fff;
+  padding: 0.6rem 1rem; border-radius: 0 0 var(--radius) var(--radius);
+  z-index: 100; transition: top 0.15s ease;
+}
+.skip-link:focus { top: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- Typografi ---------------------------------------------------------- */
+
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0 0 0.75rem; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 700; }
+h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; }
+h3 { font-size: 1.25rem; font-weight: 700; font-family: var(--body); }
+
+p { margin: 0 0 1rem; max-width: 65ch; }
+
+a { color: var(--tegl-dyp); text-underline-offset: 0.15em; }
+a:hover { color: var(--tjare); }
+
+.overlinje {
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sjo); margin-bottom: 0.5rem;
+}
+
+.merknad { font-size: 0.95rem; color: #5A5347; }
+
+/* --- Topp og meny -------------------------------------------------------- */
+
+.topp {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(252, 252, 250, 0.96);
+  border-bottom: 1px solid var(--strek);
+  backdrop-filter: blur(6px);
+}
+.topp-indre {
+  max-width: var(--maks-bredde); margin: 0 auto;
+  padding: 0.6rem 1rem;
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.logo {
+  display: flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; color: var(--tjare); font-size: 1rem;
+}
+.logo-merke { color: var(--tegl); font-size: 1.1rem; }
+.logo-tekst strong { font-family: var(--display); }
+
+.meny-knapp {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: inherit; font-weight: 600;
+  background: none; border: 2px solid var(--strek); border-radius: var(--radius);
+  padding: 0.4rem 0.9rem; cursor: pointer; color: var(--tjare);
+}
+.meny-ikon, .meny-ikon::before, .meny-ikon::after {
+  display: block; width: 18px; height: 2px; background: currentColor; position: relative;
+}
+.meny-ikon::before, .meny-ikon::after { content: ""; position: absolute; left: 0; }
+.meny-ikon::before { top: -6px; }
+.meny-ikon::after { top: 6px; }
+
+.meny ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: 0.25rem; flex-wrap: wrap;
+}
+.meny a {
+  display: block; padding: 0.35rem 0.65rem;
+  text-decoration: none; color: var(--tjare); font-weight: 600;
+  border-radius: 6px; font-size: 0.95rem;
+}
+.meny a:hover { background: var(--sand); color: var(--tegl-dyp); }
+
+@media (max-width: 900px) {
+  .meny { display: none; width: 100%; }
+  .meny.apen { display: block; }
+  .meny ul { flex-direction: column; padding: 0.5rem 0; }
+  .meny a { padding: 0.65rem 0.5rem; font-size: 1.05rem; }
+}
+@media (min-width: 901px) {
+  .meny-knapp { display: none; }
+  .meny { margin-left: auto; }
+}
+
+/* --- Hero ----------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  padding: clamp(3rem, 8vw, 6rem) 1rem 0;
+  text-align: center;
+  background: linear-gradient(var(--hvit), var(--sjo-lys));
+  overflow: hidden;
+}
+.hero h1 { color: var(--tjare); }
+.hero .ingress {
+  margin: 0 auto 1.5rem; font-size: 1.15rem; max-width: 46rem;
+}
+.hero-handling {
+  display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.nod {
+  display: inline-block;
+  background: #fff; border: 2px solid var(--tegl);
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem; margin-bottom: 0;
+  position: relative; z-index: 2;
+}
+.husrekke { display: block; width: 100%; margin-top: -1.5rem; }
+.husrekke .hus { fill: #FFFFFF; stroke: #C9C2B2; stroke-width: 1.5; }
+.husrekke .tak { fill: var(--tegl); }
+.husrekke .vindu { fill: var(--sjo); opacity: 0.85; rx: 2; }
+.husrekke .dor { fill: #6B6256; }
+
+/* --- Knapper ---------------------------------------------------------------- */
+
+.knapp {
+  display: inline-block;
+  font: inherit; font-weight: 700;
+  padding: 0.65rem 1.3rem;
+  border-radius: var(--radius);
+  text-decoration: none; cursor: pointer;
+  border: 2px solid transparent;
+}
+.knapp-rod { background: var(--tegl-dyp); color: #fff; border-color: var(--tegl-dyp); }
+.knapp-rod:hover { background: var(--tegl); border-color: var(--tegl); color: #fff; }
+.knapp-lys { background: #fff; color: var(--tjare); border-color: var(--tjare); }
+.knapp-lys:hover { background: var(--tjare); color: #fff; }
+
+.lenkeknapp {
+  font: inherit; background: none; border: none; padding: 0;
+  color: var(--tegl-dyp); text-decoration: underline;
+  text-underline-offset: 0.15em; cursor: pointer;
+}
+
+/* --- Seksjoner --------------------------------------------------------------- */
+
+.seksjon { padding: clamp(2.5rem, 6vw, 4.5rem) 1rem; }
+.seksjon-sand { background: var(--sand); }
+.indre { max-width: var(--maks-bredde); margin: 0 auto; }
+
+.to-kolonner {
+  display: grid; gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 820px) {
+  .to-kolonner { grid-template-columns: 1fr 1fr; }
+}
+
+.punkt-liste { padding-left: 1.2rem; margin: 0 0 1rem; }
+.punkt-liste li { margin-bottom: 0.55rem; max-width: 60ch; }
+.punkt-liste li::marker { color: var(--tegl); }
+
+.info-blokk {
+  background: #fff; border: 1px solid var(--strek);
+  border-radius: var(--radius); padding: 1.25rem 1.25rem 0.75rem;
+}
+.seksjon:not(.seksjon-sand) .info-blokk { background: var(--sand); border-color: transparent; }
+
+/* --- Kort fortalt ------------------------------------------------------------ */
+
+.kort-liste {
+  list-style: none; margin: 1.5rem 0; padding: 0;
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+}
+.kort {
+  background: #fff; border-radius: var(--radius);
+  border-top: 5px solid var(--tegl);
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(41, 35, 29, 0.08);
+}
+.kort h3 { margin-top: 0.5rem; }
+.kort p { margin-bottom: 0; font-size: 0.98rem; }
+.kort-tall {
+  font-family: var(--display); font-weight: 700;
+  font-size: 1.9rem; color: var(--tegl-dyp); line-height: 1;
+}
+
+/* --- Tidslinje ------------------------------------------------------------ */
+
+.tidslinje {
+  list-style: none; margin: 0; padding: 0 0 0 1rem;
+  border-left: 3px solid var(--tegl);
+}
+.tidslinje li {
+  position: relative;
+  padding: 0 0 1.1rem 1.25rem;
+}
+.tidslinje li::before {
+  content: "";
+  position: absolute; left: calc(-1rem - 8.5px); top: 0.45rem;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--hvit); border: 3px solid var(--tegl);
+}
+.tl-aar {
+  display: block; font-family: var(--display);
+  font-weight: 700; font-size: 1.2rem; color: var(--tegl-dyp);
+}
+.tl-tekst { font-size: 0.98rem; }
+
+/* --- Diagrammer ------------------------------------------------------------- */
+
+.diagram-ramme {
+  margin: 0;
+  background: #fff; border: 1px solid var(--strek);
+  border-radius: var(--radius); padding: 1rem;
+}
+.diagram-ramme figcaption {
+  font-size: 0.92rem; color: #5A5347;
+  padding-top: 0.6rem; border-top: 1px dashed var(--strek); margin-top: 0.6rem;
+}
+.d-hus { fill: #EAE4D6; stroke: #C9C2B2; }
+.d-tak { fill: var(--tegl); }
+.d-vindu { fill: var(--sjo); }
+.d-gate { fill: #F7F4EC; }
+.d-rom { fill: #FBFAF6; stroke: #C9C2B2; }
+.d-bil { fill: var(--sjo); }
+.d-brannbil { fill: var(--tegl); }
+.d-brannbil-front { fill: #E2A23B; }
+.d-hjul { fill: #29231D; }
+.d-container { fill: #6B7B52; }
+.d-sone { fill: rgba(188, 63, 40, 0.16); }
+.d-varsler { fill: #fff; stroke: #8A8270; stroke-width: 2; }
+.d-varsler-indre { fill: none; stroke: var(--tegl); stroke-width: 2; }
+.d-royk { fill: none; stroke: #8A8270; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 8; }
+.d-mal { stroke: var(--tegl-dyp); stroke-width: 2.5; }
+.d-mal-tekst { font: 700 15px var(--body); fill: var(--tegl-dyp); }
+.d-tekst { font: 600 14px var(--body); fill: var(--tjare); }
+.d-tekst-lys { font: 700 13px var(--body); fill: #fff; }
+
+/* --- Slokkeutstyr ----------------------------------------------------------- */
+
+.utstyr-grid {
+  display: grid; gap: 1.25rem; margin: 1.5rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+.utstyr-kort {
+  background: var(--sand); border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.utstyr-ikon { width: 56px; height: 56px; margin-bottom: 0.5rem; }
+.i-rod { fill: var(--tegl); }
+.i-mork { fill: var(--tjare); }
+.i-lys { fill: #fff; }
+.i-gul { fill: #E2A23B; }
+.i-strek { fill: none; stroke: var(--tjare); stroke-width: 3; }
+
+details { margin-top: 0.5rem; }
+summary {
+  cursor: pointer; font-weight: 700; color: var(--tegl-dyp);
+  padding: 0.35rem 0; border-radius: 4px;
+}
+summary:hover { color: var(--tjare); }
+details[open] summary { margin-bottom: 0.5rem; }
+
+/* --- Viktig-boks --------------------------------------------------------------- */
+
+.viktig {
+  margin-top: 1.5rem;
+  background: #FCEFE9; border-left: 6px solid var(--tegl);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.25rem 1.5rem;
+}
+.viktig h3 { margin-top: 0; }
+.viktig p { margin-bottom: 0; }
+
+/* --- Sjekkliste ------------------------------------------------------------------ */
+
+.fremdrift { margin: 1.25rem 0 0.4rem; }
+.fremdrift-spor {
+  height: 14px; border-radius: 7px;
+  background: #fff; border: 1px solid var(--strek); overflow: hidden;
+}
+.fremdrift-fyll {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--tegl-dyp), var(--tegl));
+  border-radius: 7px;
+  transition: width 0.3s ease;
+}
+.fremdrift-status { font-weight: 700; margin-bottom: 1.25rem; }
+
+.sjekk-liste {
+  list-style: none; margin: 0 0 1.5rem; padding: 0;
+  display: grid; gap: 0.5rem;
+}
+.sjekk-liste label {
+  display: flex; gap: 0.8rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--strek);
+  border-radius: var(--radius); padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+.sjekk-liste label:hover { border-color: var(--sjo); }
+.sjekk-liste input[type="checkbox"] {
+  width: 1.4rem; height: 1.4rem; margin-top: 0.15rem;
+  accent-color: var(--tegl-dyp); flex-shrink: 0;
+}
+.sjekk-liste input:checked + span { color: #5A5347; text-decoration: line-through; text-decoration-thickness: 1px; }
+
+/* --- Kontrollogg -------------------------------------------------------------------- */
+
+.logg-form {
+  display: grid; gap: 1rem; align-items: end;
+  grid-template-columns: 1fr;
+  background: var(--sand); border-radius: var(--radius);
+  padding: 1.25rem; margin: 1.5rem 0;
+}
+@media (min-width: 720px) {
+  .logg-form { grid-template-columns: 1fr 1fr; }
+  .felt-bred { grid-column: 1 / -1; }
+}
+.felt label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
+.valgfritt { font-weight: 400; color: #5A5347; }
+.felt input, .felt select {
+  width: 100%; font: inherit; color: var(--tjare);
+  padding: 0.55rem 0.7rem;
+  border: 2px solid #B9B19E; border-radius: 8px; background: #fff;
+}
+.felt input:focus-visible, .felt select:focus-visible { outline-offset: 0; }
+
+.tabell-omslag { overflow-x: auto; }
+.logg-tabell {
+  width: 100%; border-collapse: collapse; min-width: 32rem;
+}
+.logg-tabell th, .logg-tabell td {
+  text-align: left; padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--strek);
+}
+.logg-tabell th {
+  font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--sjo);
+}
+.logg-slett {
+  font: inherit; font-size: 0.9rem; font-weight: 600;
+  background: none; border: 1px solid var(--strek); border-radius: 6px;
+  padding: 0.25rem 0.6rem; cursor: pointer; color: var(--tegl-dyp);
+}
+.logg-slett:hover { background: var(--tegl-dyp); color: #fff; }
+
+/* --- Bunn ------------------------------------------------------------------------------ */
+
+.bunn {
+  background: var(--tjare); color: #EDE9E0;
+  padding: 2.5rem 1rem;
+}
+.bunn a { color: #F4C9BC; }
+.bunn a:hover { color: #fff; }
+.bunn-indre {
+  display: grid; gap: 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .bunn-indre { grid-template-columns: 1.4fr 1fr; } }
+.bunn-tittel { font-family: var(--display); font-size: 1.2rem; font-weight: 700; }
+.bunn-liste { list-style: none; padding: 0; margin: 0; }
+.bunn-liste li { margin-bottom: 0.4rem; }
+
+/* --- Utskrift ---------------------------------------------------------------------------- */
+
+@media print {
+  .topp, .hero-handling, .meny-knapp, .knapp, #nullstillSjekk, .logg-form, .logg-slett { display: none !important; }
+  .seksjon { padding: 1rem 0; break-inside: avoid; }
+  body { background: #fff; font-size: 11pt; }
+  a::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+  .logg-tabell { min-width: 0; }
+}
