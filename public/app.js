@@ -11,14 +11,14 @@
      koordinatene der du klikker i kartet, så det er lett å finne riktige verdier.
      Hvert skap: { navn: "...", lat: <breddegrad>, lng: <lengdegrad> } */
   var BRANNSLANGESKAP = [
-    { navn: "Søragata (nord, ved Parken)",        lat: 59.14565, lng: 5.27305 },
-    { navn: "Søragata (ved Tåkelurfabrikken)",    lat: 59.14490, lng: 5.27300 },
-    { navn: "Brattabakken / Søragata",            lat: 59.14430, lng: 5.27255 },
-    { navn: "Piren",                              lat: 59.14390, lng: 5.27320 },
-    { navn: "Bøgevikbakken (vest)",               lat: 59.14385, lng: 5.27185 },
-    { navn: "Veibelsbakken",                      lat: 59.14345, lng: 5.27155 },
-    { navn: "Nornes",                             lat: 59.14305, lng: 5.27215 },
-    { navn: "Kornelius Holmen (sør)",             lat: 59.14260, lng: 5.27230 }
+    { navn: "Søragadå (nord, ved Kaigata)",       lat: 59.14890, lng: 5.25930 },
+    { navn: "Søragadå (ved Tåkelurfabrikken)",    lat: 59.14845, lng: 5.26060 },
+    { navn: "Søragadå (sentralt)",                lat: 59.14800, lng: 5.26150 },
+    { navn: "Søragadå (sør, ved piren)",          lat: 59.14755, lng: 5.26285 },
+    { navn: "Worregadå / Bådebakken",             lat: 59.14900, lng: 5.26010 },
+    { navn: "Veibellsbakken",                     lat: 59.14905, lng: 5.25975 },
+    { navn: "Nordnes",                            lat: 59.14848, lng: 5.25905 },
+    { navn: "Korneliusholmen (sør)",              lat: 59.14828, lng: 5.25795 }
   ];
 
   /* ---------- Mobilmeny ---------- */
